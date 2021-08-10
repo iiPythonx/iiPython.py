@@ -1,12 +1,26 @@
 # Copyright 2021 iiPython
 
 # Modules
-from typing import Iterable
 from datetime import datetime
+from typing import Any, Iterable
 
 # Functions
 def avg(v: Iterable) -> float:
     return float(sum(v) / len(v))
+
+def find(d: list, func: Any) -> Any:
+    for item in d:
+        if func(item) is True:
+            return item
+
+def findAll(d: list, func: Any) -> Any:
+    return [item for item in d if func(item) is True][0]
+
+def findLast(d: list, func: Any) -> Any:
+    d.reverse()
+    for item in d:
+        if func(item) is True:
+            return item
 
 def itergen(v: Iterable) -> list:
     return [i for i in v]

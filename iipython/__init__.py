@@ -4,7 +4,7 @@ from .src.structs import (
 )
 from .src.func import (
     avg, itergen, parseBool, normalize, now,
-    xrange
+    xrange, find
 )
 from .src.vars import (
     big, inf
