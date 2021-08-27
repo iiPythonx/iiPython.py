@@ -1,6 +1,7 @@
 # Copyright 2021 iiPython
 
 # Modules
+import math
 from datetime import datetime
 from typing import Any, Iterable, Union
 
@@ -90,6 +91,24 @@ def filterAll(d: dict, func: Any) -> dict:
         d[i] = func(d[i])
 
     return d
+
+def findIndex(ls: list, idx: int) -> Any:
+    """Returns the appropriate index from the provided list
+
+    Parameters:
+        ls (list): the list to use
+        idx (int): the index to find
+
+    Returns:
+        rtem (any): the item at the provided index
+
+    Specifically meant to be used with numbers larger than the list itself.
+    In which case, built in indexing will fail, but this one works properly."""
+    try:
+        return ls[idx]
+
+    except IndexError:
+        return ls[idx - (len(ls) * math.floor(idx / len(ls)))]
 
 def parseBool(v: str) -> bool:
     """Takes the provided string and converts it to a boolean

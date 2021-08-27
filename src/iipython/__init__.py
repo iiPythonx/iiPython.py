@@ -3,15 +3,15 @@ from .src.structs import (
     dict, timer
 )
 from .src.func import (
-    avg, itergen, parseBool, normalize, now,
+    avg, parseBool, normalize, now,
     xrange, find, findLast, findAll, filterAll,
-    prettyDict, rangdict
+    findIndex, prettyDict, rangdict
 )
 from .src.vars import (
     big, inf
 )
 
 __author__ = "iiPython"
-__version__ = "1.0.5"
+__version__ = "1.0.6"
 __license__ = "MIT"
 __copyright__ = f"Copyright 2021 {__author__}"
