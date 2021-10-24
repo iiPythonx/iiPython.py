@@ -19,7 +19,7 @@ class Hellman(object):
         self.hash_key = None
 
     def pad(self, string: str) -> str:
-        return string + (16 - len(string) % 16) * "{"
+        return string + (16 - len(string) % 16) * "\5"
 
     def generate_public(self, priv: int) -> int:
         """
@@ -48,4 +48,4 @@ class Hellman(object):
 
         decipher = AES.new(self.hash_key, AES.MODE_ECB)
         pt = decipher.decrypt(data).decode("utf8")
-        return pt[:pt.find("{")]
+        return pt[:pt.find("\5")]
