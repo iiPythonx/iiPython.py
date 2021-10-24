@@ -17,7 +17,6 @@ def find_packages(dir):
         if "egg-info" not in path and "__pycache__" not in path:
             if path != dir:
                 packs.append(path)
-                print(path)
 
     return packs
 
@@ -55,6 +54,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
     ],
     python_requires = ">=3.6, <4",
+    requires = open("reqs.txt", "r").read().splitlines(),
     package_dir = {"": "src"},
     packages = find_packages("src"),
 )

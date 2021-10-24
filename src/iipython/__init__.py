@@ -11,7 +11,9 @@ from .src.vars import (
     big, inf
 )
 
+from .mod.hellman import Hellman
+
 __author__ = "iiPython"
-__version__ = "1.0.6"
+__version__ = "1.0.7"
 __license__ = "MIT"
 __copyright__ = f"Copyright 2021 {__author__}"
