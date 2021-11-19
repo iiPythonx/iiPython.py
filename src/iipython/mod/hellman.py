@@ -3,12 +3,22 @@
 
 # Modules
 import random
-from Crypto.Cipher import AES    
-from Crypto.Hash import SHA256
+try:
+    from Crypto.Cipher import AES
+    from Crypto.Hash import SHA256
+
+    no_support = False
+
+except ImportError:
+    no_support = True
+    pass  # No crypto support
 
 # Hellman class
 class Hellman(object):
-    def __init__(self, base: int = 9385, modu: int = 15 ** 15) -> None:
+    def __init__(self, base: int, modu: int) -> None:
+        if no_support:
+            raise RuntimeError("you need pycryptodome to use this!")
+
         self.base = base
         self.modu = modu
 
