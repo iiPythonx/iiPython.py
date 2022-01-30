@@ -46,14 +46,9 @@ setup(
     author_email = "ben@iipython.cf",
     classifiers = [
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3"
     ],
-    python_requires = ">=3.6, <4",
+    python_requires = ">=3.8, <4",
     requires = open("reqs.txt", "r").read().splitlines(),
     package_dir = {"": "src"},
     packages = find_packages("src"),

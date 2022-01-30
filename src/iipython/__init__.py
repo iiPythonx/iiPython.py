@@ -1,19 +1,32 @@
-from .src.structs import (
-    Dictionary, Timer,
-    dict, timer
-)
-from .src.func import (
-    avg, parseBool, normalize, now,
-    xrange, find, findLast, findAll, filterAll,
-    findIndex, prettyDict, rangdict
-)
-from .src.vars import (
-    big, inf
-)
-
-from .mod.hellman import Hellman
-
 __author__ = "iiPython"
-__version__ = "1.0.7.3"
+__version__ = "1.0.9"
 __license__ = "MIT"
-__copyright__ = f"Copyright 2021 {__author__}"
+__copyright__ = "Copyright 2022 iiPython"
+
+from .term import color, clear, cprint
+from .utils import (
+    avg, find, findAll, findLast, filterAll, findIndex,
+    parseBool, normalize, rangdict, reverse, now, prettyDict,
+    xrange
+)
+from .iikp import keys, readchar
+from .socket import Socket, Connection
+
+from typing import List, Union
+
+def keypress_prompt(accept: List[Union[str, int]]) -> Union[str, int]:
+    """Infinitely waits until an acceptable key is pressed
+
+    Parameters:
+        accept (list): a list with allowed keys
+
+    Returns:
+        result (str, int): The pressed key
+    """
+    while True:
+        key = readchar()
+        if key in accept:
+            return key
+
+        elif key == keys.CTRL_C:
+            raise KeyboardInterrupt

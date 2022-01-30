@@ -1,4 +1,4 @@
-# Copyright 2021 iiPython
+# Copyright 2022 iiPython
 
 # Modules
 import math
@@ -38,7 +38,7 @@ def find(d: Iterable, func: Any) -> dict:
         raise ValueError("find needs a iterable with only dictionaries, got {}".format(ftype))
 
     for item in d:
-        if func(item) is True:
+        if func(item):
             return item
 
 def findAll(d: Union[list, dict], func: Any) -> Any:
@@ -65,7 +65,7 @@ def findAll(d: Union[list, dict], func: Any) -> Any:
     if isinstance(d, list):
         return [item for item in d if func(item) is True]
 
-    return {item: d[item] for item in d if func(d[item]) is True}
+    return {item: d[item] for item in d if func(d[item])}
 
 def findLast(d: Iterable, func: Any) -> Any:
     """Reverses the provided iterable, and calls .find(d, func)"""
@@ -116,7 +116,7 @@ def parseBool(v: str) -> bool:
     - on, off
     - true, false
     - yes, no"""
-    return True if v.lower() in ["true", "1", "yes", "on"] else False
+    return v.lower() in ["true", "1", "yes", "on"]
 
 def normalize(*args) -> list:
     """Takes the provided arguments, and attempts to replace all
