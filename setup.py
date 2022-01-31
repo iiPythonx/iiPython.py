@@ -48,6 +48,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3"
     ],
+    license = "MIT",
+    url = "https://github.com/ii-Python/iiPython.py",
     python_requires = ">=3.8, <4",
     requires = open("reqs.txt", "r").read().splitlines(),
     package_dir = {"": "src"},

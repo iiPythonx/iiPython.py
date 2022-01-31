@@ -1,9 +1,9 @@
 __author__ = "iiPython"
-__version__ = "1.1a"
+__version__ = "1.1"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022 iiPython"
 
-from .term import color, clear, cprint
+from .term import color, clear, cprint, to_ansi, colormap
 from .utils import (
     avg, find, findAll, findLast, filterAll, findIndex,
     parseBool, normalize, rangdict, reverse, now, prettyDict,
