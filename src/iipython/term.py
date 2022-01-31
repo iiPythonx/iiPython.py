@@ -31,11 +31,12 @@ def clear() -> None:
     """Clears the terminal screen"""
     os.system(_clear_command)
 
-def color(text: str) -> str:
+def color(text: str, dry: bool = False) -> str:
     """Colorizes text using bbcode-like markup
 
     Parameters:
         text (str): the text to colorize
+        dry (bool): dry run, only strip tags
 
     Returns:
         text (str): the colorized text
@@ -57,13 +58,13 @@ def color(text: str) -> str:
         tag = tag.strip("[]")
         if tag[0] == "/":
             tags = tags[:-1]
-            text = text.replace(f"[/{tag[1:]}]", colormap[tags[-1] if tags else "reset"], 1)
+            text = text.replace(f"[/{tag[1:]}]", (colormap[tags[-1] if tags else "reset"]) if not dry else "", 1)
 
         else:
             if tag not in colormap:
                 continue
 
-            text = text.replace(f"[{tag}]", colormap[tag], 1)
+            text = text.replace(f"[{tag}]", colormap[tag] if not dry else "", 1)
             tags.append(tag)
 
     return text

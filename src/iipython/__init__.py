@@ -1,5 +1,5 @@
 __author__ = "iiPython"
-__version__ = "1.0.9"
+__version__ = "1.1a"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022 iiPython"
 
