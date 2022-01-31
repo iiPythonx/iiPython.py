@@ -58,7 +58,7 @@ def color(text: str, dry: bool = False) -> str:
         tag = tag.strip("[]")
         if tag == "/":
             isbg, tags = tags[-1][:2] == "bg", tags[:-1]
-            text = text.replace(f"[/{tag[1:]}]", (colormap["bgreset"] if isbg else "") + (colormap[tags[-1]] if tags else "reset") if not dry else "", 1)
+            text = text.replace(f"[/{tag[1:]}]", (colormap["bgreset"] if isbg else "") + (colormap[tags[-1] if tags else "reset"]) if not dry else "", 1)
 
         else:
             if tag not in colormap:
