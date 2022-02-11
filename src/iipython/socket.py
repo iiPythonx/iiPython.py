@@ -10,11 +10,16 @@ import base64
 from typing import Any, List
 from types import FunctionType
 from copy import copy as copyobj
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import ec
-from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+
+try:
+    from cryptography.fernet import Fernet
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.primitives.asymmetric import ec
+    from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+
+except ImportError:
+    Fernet, hashes, serialization, ec, HKDF = None, None, None, None, None
 
 # Initialization
 def _wrap_obj(parent: object, obj: FunctionType, name: str, new: FunctionType) -> None:
