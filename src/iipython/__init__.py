@@ -1,5 +1,5 @@
 __author__ = "iiPython"
-__version__ = "1.1.2"
+__version__ = "1.1.4"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022 iiPython"
 
@@ -11,6 +11,7 @@ from .utils import (
 )
 from .iikp import keys, readchar
 from .socket import Socket, Connection
+from .daemon import Daemon
 
 from typing import List, Union
 
