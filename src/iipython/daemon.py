@@ -13,6 +13,7 @@ from .socket import Socket, Connection
 class Daemon(object):
     def __init__(self, name: str) -> None:
         self.lock_file = os.path.join(gettempdir(), f"{name}.lock")
+        self.cli = os.path.isfile(self.lock_file)
 
         # Attribs
         self.handlers = {}
@@ -29,8 +30,7 @@ class Daemon(object):
                     if msg["emit"] in self.handlers:
                         self.handlers[msg["emit"]](msg["args"])
 
-            except Exception as e:
-                raise e
+            except Exception:
                 break
 
     def on(self, event: str) -> FunctionType:
