@@ -25,9 +25,9 @@ class Daemon(object):
                 if not data:
                     break
 
-                data = data[0]
-                if data["emit"] in self.handlers:
-                    self.handlers[data["emit"]](data["args"])
+                for msg in data:
+                    if msg["emit"] in self.handlers:
+                        self.handlers[msg["emit"]](msg["args"])
 
             except Exception as e:
                 raise e
