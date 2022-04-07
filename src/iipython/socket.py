@@ -29,6 +29,9 @@ def _wrap_obj(parent: object, obj: FunctionType, name: str, new: FunctionType) -
 # Classes
 class Socket(socket.socket):
     def __init__(self, *args, **kwargs) -> None:
+        if Fernet is None:
+            raise RuntimeError("iiPython's Socket library required the python cryptography module, but it is not installed!\nInstall it with `pip install cryptography`.")
+
         super().__init__(*args, **kwargs)
         _wrap_obj(self, self.connect, "_sock_connect", self._connect_wrap)
 
@@ -85,6 +88,9 @@ class Socket(socket.socket):
 
 class Connection(object):
     def __init__(self, sock: socket.socket) -> None:
+        if Fernet is None:
+            raise RuntimeError("iiPython's Socket library required the python cryptography module, but it is not installed!\nInstall it with `pip install cryptography`.")
+
         self.sock = sock
         self.handshake()
 
