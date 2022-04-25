@@ -2,8 +2,9 @@
 
 # Modules
 import math
+import itertools
 from datetime import datetime
-from typing import Any, Iterable, Union
+from typing import Any, Iterable, Tuple, Union
 
 # Functions
 def avg(itrble: Iterable) -> float:
@@ -16,6 +17,21 @@ def avg(itrble: Iterable) -> float:
         average (float): The average of the iterable
     """
     return float(sum(itrble) / len(itrble))
+
+def filterAll(d: dict, func: Any) -> dict:
+    """Filters the provided dictionary using the passed function
+
+    Parameters:
+        d (dict): a dictionary
+        func (any): a function that returns a new value for the passed value
+
+    Returns:
+        result (dict): the filtered dictionary
+    """
+    for i in d:
+        d[i] = func(d[i])
+
+    return d
 
 def find(d: Iterable, func: Any) -> dict:
     """Finds dictionaries in a iterable with specific information
@@ -67,31 +83,6 @@ def findAll(d: Union[list, dict], func: Any) -> Any:
 
     return {item: d[item] for item in d if func(d[item])}
 
-def findLast(d: Iterable, func: Any) -> Any:
-    """Reverses the provided iterable, and calls .find(d, func)"""
-    if hasattr(d, "reverse"):
-        d.reverse()
-
-    else:
-        raise RuntimeError("provided iterable has no .reverse function")
-
-    return find(d, func)
-
-def filterAll(d: dict, func: Any) -> dict:
-    """Filters the provided dictionary using the passed function
-
-    Parameters:
-        d (dict): a dictionary
-        func (any): a function that returns a new value for the passed value
-
-    Returns:
-        result (dict): the filtered dictionary
-    """
-    for i in d:
-        d[i] = func(d[i])
-
-    return d
-
 def findIndex(ls: list, idx: int) -> Any:
     """Returns the appropriate index from the provided list
 
@@ -110,13 +101,25 @@ def findIndex(ls: list, idx: int) -> Any:
     except IndexError:
         return ls[idx - (len(ls) * math.floor(idx / len(ls)))]
 
-def parseBool(v: str) -> bool:
-    """Takes the provided string and converts it to a boolean
-    - 1, 0
-    - on, off
-    - true, false
-    - yes, no"""
-    return v.lower() in ["true", "1", "yes", "on"]
+def findLast(d: Iterable, func: Any) -> Any:
+    """Reverses the provided iterable, and calls .find(d, func)"""
+    if hasattr(d, "reverse"):
+        d.reverse()
+
+    else:
+        raise RuntimeError("provided iterable has no .reverse function")
+
+    return find(d, func)
+
+def getint(string: str) -> Tuple[int | None, str | None]:
+    if not string[0].isdigit():
+        return None, None  # Hefty performance boost for long strings
+
+    intlist = [string[0]] + [c for c in string[1:] if c.isdigit()]
+    if not intlist:
+        return None, None
+
+    return int("".join(intlist)), string[len(intlist):]
 
 def normalize(*args) -> list:
     """Takes the provided arguments, and attempts to replace all
@@ -132,6 +135,23 @@ def normalize(*args) -> list:
             _normd.append(arg)
 
     return _normd
+
+def now() -> str:
+    """Returns the current time in a neat way"""
+    dt = datetime.now()
+    return dt.strftime("%a. %B %-d{}, %Y".format("th" if 11 <= dt.day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(dt.day % 10, "th")))
+
+def parseBool(v: str) -> bool:
+    """Takes the provided string and converts it to a boolean
+    - 1, 0
+    - on, off
+    - true, false
+    - yes, no"""
+    return v.lower() in ["true", "1", "yes", "on"]
+
+def prettyDict(d: dict) -> str:
+    """Takes a dictionary and lays it out in "Key: Value" format, seperated by tabs."""
+    return "".join("{}: {}\t".format(i, d[i]) for i in d)
 
 def rangdict(r: Iterable, value: Any = "") -> dict:
     """Constructs a dictionary with the given range
@@ -152,25 +172,35 @@ def rangdict(r: Iterable, value: Any = "") -> dict:
         If `value` is anything other than `""`, it
         will be used for the value of each key.
     """
-    nd = {}
-    for i in r:
-        nd[i] = value.replace("%i", str(i)) or i
-
-    return nd
+    return {i: value.replace("%i", str(i)) or i for i in r}
 
 def reverse(d: Iterable) -> Any:
     """Reverses the provided iterable, but also RETURNS it"""
     d.reverse()
     return d
 
-def now() -> str:
-    """Returns the current time in a neat way"""
-    dt = datetime.now()
-    return dt.strftime("%a. %B %-d{}, %Y".format("th" if 11 <= dt.day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(dt.day % 10, "th")))
+def sort(items: list) -> list:
+    built = {"n": {}, "s": []}
+    for item in items:
+        intrank, garbage = getint(item)
+        if intrank is not None:
+            if intrank not in built["n"]:
+                built["n"][intrank] = [garbage]
+                continue
 
-def prettyDict(d: dict) -> str:
-    """Takes a dictionary and lays it out in "Key: Value" format, seperated by tabs."""
-    return "".join("{}: {}\t".format(i, d[i]) for i in d)
+            built["n"][intrank].append(garbage)
+            continue
+
+        built["s"].append(item)
+
+    # Built number rankings
+    ns = {k: sorted(v) for k, v in built["n"].items()}
+    ns = list(itertools.chain.from_iterable([[str(k) + i for i in v] for k, v in {k: ns[k] for k in sorted(built["n"])}.items()]))
+
+    # Build actual list
+    built["s"] = sorted(built["s"])
+    nidx = sorted(built["s"] + [ns[0]]).index(ns[0])
+    return built["s"][:nidx] + ns + built["s"][nidx:]
 
 def xrange(mn: int, mx: int = None) -> list:
     """Built-in range function, but actually gives you a range between mn and mx.

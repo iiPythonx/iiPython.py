@@ -1,14 +1,10 @@
 __author__ = "iiPython"
-__version__ = "1.1.6"
+__version__ = "1.1.6-2"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022 iiPython"
 
 from .term import color, clear, cprint, to_ansi, colormap
-from .utils import (
-    avg, find, findAll, findLast, filterAll, findIndex,
-    parseBool, normalize, rangdict, reverse, now, prettyDict,
-    xrange
-)
+from .utils import *
 from .iikp import keys, readchar
 from .socket import Socket, Connection
 from .daemon import Daemon
