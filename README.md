@@ -12,9 +12,9 @@ pip install iipythonpy
 ```
 or, to install from source:
 ```sh
-git clone https://github.com/ii-Python/iiPython.py
+git clone https://github.com/iiPythonx/iiPython.py
 cd iiPython.py
-python3 setup.py install  # or pip install .
+python3 -m pip install .
 ```
 
 ### Module usage
